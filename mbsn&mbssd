@@ -1,0 +1,25 @@
+if(wType == WTSP_GET_MBSN)
+	{
+		g_GetVersion.type = L"MOKP_SN";
+		g_GetVersion.ChkData = L"MB";
+		if(blGetVersion(WTSP_GET_MBSN, pSFIS,&g_GetVersion,&csLogs) == FALSE)
+		{
+			csLogs = csLogs + "Get MBSN fail.\n";
+			goto Return;
+		}
+		wcstombs_s(&tSize,szTemp,MAX_PARAMETER_LEHGTH,g_wszGetVersion,MAX_PARAMETER_LEHGTH);
+		csLogs = csLogs + "MBSN = " + szTemp + "\n";
+	}
+
+	if(wType == WTSP_GET_MBSSDSN)
+	{
+		g_GetVersion.type = L"MOKP_SN";
+		g_GetVersion.ChkData = L"SSD";
+		if(blGetVersion(WTSP_GET_MBSSDSN, pSFIS,&g_GetVersion,&csLogs) == FALSE)
+		{
+			csLogs = csLogs + "Get MB SSD SN fail.\n";
+			goto Return;
+		}
+		wcstombs_s(&tSize,szTemp,MAX_PARAMETER_LEHGTH,g_wszGetVersion,MAX_PARAMETER_LEHGTH);
+		csLogs = csLogs + "MB SSD SN = " + szTemp + "\n";
+	}
