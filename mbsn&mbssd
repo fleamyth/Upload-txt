@@ -1,25 +1,19 @@
-if(wType == WTSP_GET_MBSN)
-	{
-		g_GetVersion.type = L"MOKP_SN";
-		g_GetVersion.ChkData = L"MB";
-		if(blGetVersion(WTSP_GET_MBSN, pSFIS,&g_GetVersion,&csLogs) == FALSE)
-		{
-			csLogs = csLogs + "Get MBSN fail.\n";
-			goto Return;
-		}
-		wcstombs_s(&tSize,szTemp,MAX_PARAMETER_LEHGTH,g_wszGetVersion,MAX_PARAMETER_LEHGTH);
-		csLogs = csLogs + "MBSN = " + szTemp + "\n";
-	}
+		g_TSPGetInputData.pType = g_wszpType; 
+		g_TSPGetInputData.pFlag = g_wszpFlag;
+		g_TSPGetInputData.pData = g_wszSN;
 
-	if(wType == WTSP_GET_MBSSDSN)
-	{
-		g_GetVersion.type = L"MOKP_SN";
-		g_GetVersion.ChkData = L"SSD";
-		if(blGetVersion(WTSP_GET_MBSSDSN, pSFIS,&g_GetVersion,&csLogs) == FALSE)
+		if(strlen(g_szpDev) > 0)
+			g_TSPGetInputData.pDev =  atoi(g_szpDev);
+		
+		g_TSPGetInputData.pChkData1 = g_wszChkData1;
+		g_TSPGetInputData.pChkData2 = g_wszChkData2;
+
+		csLogs = csLogs + szTemp + "\n";
+		if(blSFISGetInputData(WTSP_GET_INPUT_DATA, pSFIS, &g_TSPGetInputData, &csLogs) == FALSE)
 		{
-			csLogs = csLogs + "Get MB SSD SN fail.\n";
+			csLogs = csLogs + "blSFISGetInputData fail.\n";
 			goto Return;
 		}
+
 		wcstombs_s(&tSize,szTemp,MAX_PARAMETER_LEHGTH,g_wszGetVersion,MAX_PARAMETER_LEHGTH);
-		csLogs = csLogs + "MB SSD SN = " + szTemp + "\n";
-	}
+		csLogs = csLogs + "Data = " + szTemp + "\n";
